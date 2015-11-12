@@ -9,11 +9,11 @@ IBM would [welcome feedback](#issues-and-contributions) on what is offered here.
 The image can be built using standard [Docker commands](https://docs.docker.com/userguide/dockerimages/) against the supplied Dockerfile.  For example:
 
 ~~~
-cd 10.0.0.0
-docker build -t IIBV10IMAGE .
+cd 10.0.0.2
+docker build -t iibV10image .
 ~~~
 
-This will create an image called IIBV10IMAGE in your local docker registry.
+This will create an image called iibV10image in your local docker registry.
 
 # What the image contains
 
@@ -32,7 +32,7 @@ The last important point of configuration when running a container from this ima
 For example:
 
 ~~~
-docker run -e LICENSE=accept -e NODENAME=MYNODE-P IIBV10IMAGE
+docker run --name myNode -e LICENSE=accept -e NODENAME=MYNODE -P iibv10image
 ~~~
 
 This will run a container that creates and starts an Integration Node called `MYNODE` and exposes ports `4414` and `7800` on random ports on the host machine.  At this point you can use:
@@ -88,7 +88,7 @@ At this point, your container is running and you can [deploy](http://www-01.ibm.
 
 # Issues and contributions
 
-For issues relating specifically to this Docker image, please use the [GitHub issue tracker](https://github.com/ibm-messaging/mq-docker/issues). For more general issues relating to IBM Integration Bus or to discuss the Docker technical preview, please use the [Integration Community](https://developer.ibm.com/integration/). If you do submit a Pull Request related to this Docker image, please indicate in the Pull Request that you accept and agree to be bound by the terms of the [IBM Contributor License Agreement](CLA.md).
+For issues relating specifically to this Docker image, please use the [GitHub issue tracker](https://github.com/ot4i/iib-docker/issues). For more general issues relating to IBM Integration Bus or to discuss the Docker technical preview, please use the [Integration Community](https://developer.ibm.com/integration/). If you do submit a Pull Request related to this Docker image, please indicate in the Pull Request that you accept and agree to be bound by the terms of the [IBM Contributor License Agreement](CLA.md).
 
 # License
 
