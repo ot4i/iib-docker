@@ -25,6 +25,7 @@ COPY kernel_settings.sh /tmp/
 RUN echo "IIB_10:" > /etc/debian_chroot  && \
     touch /var/log/syslog && \
     chown syslog:adm /var/log/syslog && \
+    chmod +x /tmp/kernel_settings.sh && \
     /tmp/kernel_settings.sh
 
 # Create user to run as
