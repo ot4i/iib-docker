@@ -10,10 +10,10 @@ The image can be built using standard [Docker commands](https://docs.docker.com/
 
 ~~~
 cd 10.0.0.2
-docker build -t iibV10image .
+docker build -t iibv10image .
 ~~~
 
-This will create an image called iibV10image in your local docker registry.
+This will create an image called iibv10image in your local docker registry.
 
 # What the image contains
 
