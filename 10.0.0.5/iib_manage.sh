@@ -20,7 +20,7 @@ stop()
 start()
 {
 	echo "----------------------------------------"
-  /opt/ibm/iib-10.0.0.4/iib version
+  /opt/ibm/iib-10.0.0.5/iib version
 	echo "----------------------------------------"
 
   NODE_EXISTS=`mqsilist | grep $NODE_NAME > /dev/null ; echo $?`
