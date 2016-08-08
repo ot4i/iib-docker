@@ -5,7 +5,7 @@
 # which accompanies this distribution, and is available at
 # http://www.eclipse.org/legal/epl-v10.html
 
-FROM ubuntu:16.04
+FROM ubuntu:14.04
 
 MAINTAINER Sam Rogers srogers@uk.ibm.com
 
@@ -27,6 +27,7 @@ RUN echo "IIB_10:" > /etc/debian_chroot  && \
     chown syslog:adm /var/log/syslog && \
     chmod +x /tmp/kernel_settings.sh;sync && \
     /tmp/kernel_settings.sh
+
 
 # Create user to run as
 RUN useradd --create-home --home-dir /home/iibuser -G mqbrkrs,sudo iibuser && \
