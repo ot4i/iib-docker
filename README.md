@@ -9,7 +9,7 @@ IBM would [welcome feedback](#issues-and-contributions) on what is offered here.
 The image can be built using standard [Docker commands](https://docs.docker.com/userguide/dockerimages/) against the supplied Dockerfile.  For example:
 
 ~~~
-cd 10.0.0.5
+cd 10.0.0.6
 docker build -t iibv10image .
 ~~~
 
