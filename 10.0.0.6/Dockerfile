@@ -33,6 +33,11 @@ RUN echo "IIB_10:" > /etc/debian_chroot  && \
 RUN useradd --create-home --home-dir /home/iibuser -G mqbrkrs,sudo iibuser && \
     sed -e 's/^%sudo	.*/%sudo	ALL=NOPASSWD:ALL/g' -i /etc/sudoers
 
+# Increase security
+RUN sed -i 's/sha512/sha512 minlen=8/'  /etc/pam.d/common-password && \
+    sed -i 's/PASS_MIN_DAYS\t0/PASS_MIN_DAYS\t1/'  /etc/login.defs && \
+    sed -i 's/PASS_MAX_DAYS\t99999/PASS_MAX_DAYS\t90/'  /etc/login.defs
+
 # Copy in script files
 COPY iib_manage.sh /usr/local/bin/
 COPY iib-license-check.sh /usr/local/bin/
