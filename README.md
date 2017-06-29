@@ -13,7 +13,7 @@ cd 10.0.0.8
 docker build -t iibv10image .
 ~~~
 
-This will create an image called iibv10image occupying approximately 1.15B of space (including the size of the underlying Ubuntu base image) in your local Docker registry:
+This will create an image called `iibv10image` occupying approximately 1.15GB of space (including the size of the underlying Ubuntu base image) in your local Docker registry:
 
 ~~~
 REPOSITORY     TAG       IMAGE ID        CREATED          SIZE
