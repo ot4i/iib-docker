@@ -9,6 +9,7 @@
 set -e
 
 NODE_NAME=${NODENAME-IIBV10NODE}
+SERVER_NAME=${SERVERNAME-default}
 
 stop()
 {
@@ -36,8 +37,12 @@ start()
 	echo "----------------------------------------"
 	echo "Starting syslog"
   sudo /usr/sbin/rsyslogd
+        echo "----------------------------------------"
 	echo "Starting node $NODE_NAME"
 	mqsistart $NODE_NAME
+        echo "----------------------------------------"
+        echo "Creating integration server $SERVER_NAME"
+        mqsicreateexecutiongroup $NODE_NAME -e $SERVER_NAME
 	echo "----------------------------------------"
 }
 
