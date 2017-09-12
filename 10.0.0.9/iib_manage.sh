@@ -10,6 +10,7 @@ set -e
 
 NODE_NAME=${NODENAME-IIBV10NODE}
 SERVER_NAME=${SERVERNAME-default}
+BAR_FILE_DIR=${BARFILEDIR-/tmp/BARs}
 
 stop()
 {
@@ -21,28 +22,38 @@ stop()
 start()
 {
 	echo "----------------------------------------"
-  /opt/ibm/iib-10.0.0.9/iib version
+        /opt/ibm/iib-10.0.0.9/iib version
 	echo "----------------------------------------"
 
-  NODE_EXISTS=`mqsilist | grep $NODE_NAME > /dev/null ; echo $?`
+        NODE_EXISTS=`mqsilist | grep $NODE_NAME > /dev/null ; echo $?`
 
 
 	if [ ${NODE_EXISTS} -ne 0 ]; then
-    echo "----------------------------------------"
-    echo "Node $NODE_NAME does not exist..."
-    echo "Creating node $NODE_NAME"
-		mqsicreatebroker $NODE_NAME
-    echo "----------------------------------------"
+          echo "----------------------------------------"
+          echo "Node $NODE_NAME does not exist..."
+          echo "Creating node $NODE_NAME"
+          mqsicreatebroker $NODE_NAME
+          echo "----------------------------------------"
 	fi
 	echo "----------------------------------------"
 	echo "Starting syslog"
-  sudo /usr/sbin/rsyslogd
+        sudo /usr/sbin/rsyslogd
+        echo "----------------------------------------"
         echo "----------------------------------------"
 	echo "Starting node $NODE_NAME"
 	mqsistart $NODE_NAME
+        echo "----------------------------------------" 
         echo "----------------------------------------"
         echo "Creating integration server $SERVER_NAME"
-        mqsicreateexecutiongroup $NODE_NAME -e $SERVER_NAME
+        mqsicreateexecutiongroup $NODE_NAME -e $SERVER_NAME -w 120
+        echo "----------------------------------------"
+        echo "----------------------------------------"
+        shopt -s nullglob
+        BARFILES=$BAR_FILE_DIR/*
+        for f in $BARFILES ; do
+          echo "Deploying $f ..."
+          mqsideploy $NODE_NAME -e $SERVER_NAME -a $f -w 120
+        done
 	echo "----------------------------------------"
 }
 
