@@ -31,14 +31,19 @@ After building a Docker image from the supplied files, you can [run a container]
 
 In order to run a container from this image, it is necessary to accept the terms of the IBM Integration Bus for Developers license.  This is achieved by specifying the environment variable `LICENSE` equal to `accept` when running the image.  You can also view the license terms by setting this variable to `view`. Failure to set the variable will result in the termination of the container with a usage statement.  You can view the license in a different language by also setting the `LANG` environment variable.
 
-In addition to accepting the license, you can optionally specify an Integration Node name using the `NODENAME` environment variable.
+In addition to accepting the license, you can optionally specify an Integration Node name using the `NODENAME` environment variable and an Integration Server name using the `SERVERNAME` environment variable.
 
 The last important point of configuration when running a container from this image, is port mapping.  The Dockerfile exposes ports `4414` and `7800` by default, for Integration Node administration and Integration Server HTTP traffic respectively.  This means you can run with the `-P` flag to auto map these ports to ports on your host.  Alternatively you can use `-p` to expose and map any ports of your choice.
 
 For example:
 
 ~~~
-docker run --name myNode -e LICENSE=accept -e NODENAME=MYNODE -P iibv10image
+docker run --name myNode -e LICENSE=accept -e NODENAME=MYNODE -e SERVERNAME=MYSERVER -P iibv10image
+~~~
+
+If you wish, you can also deploy an IBM Integration Bus BAR file by specifying a [Docker volume] (https://docs.docker.com/engine/admin/volumes/volumes/) which makes the BAR file(s) available when the container is started:
+~~~
+docker run --name myNode -v  /local/path/to/BARs:/tmp/BARs -e LICENSE=accept -e NODENAME=MYNODE -e SERVERNAME=MYSERVER -P iibv10image 
 ~~~
 
 This will run a container that creates and starts an Integration Node called `MYNODE` and exposes ports `4414` and `7800` on random ports on the host machine.  At this point you can use:
@@ -47,6 +52,8 @@ docker port <container name>
 ~~~
 
 to see which ports have been mapped then connect to the Node's web user interface as normal (see [verification](# Verifying your container is running correctly) section below).
+
+
 
 ### Running administration commands
 
