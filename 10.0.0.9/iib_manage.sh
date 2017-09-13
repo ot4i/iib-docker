@@ -10,7 +10,6 @@ set -e
 
 NODE_NAME=${NODENAME-IIBV10NODE}
 SERVER_NAME=${SERVERNAME-default}
-BAR_FILE_DIR=${BARFILEDIR-/tmp/BARs}
 
 stop()
 {
@@ -49,8 +48,7 @@ start()
         echo "----------------------------------------"
         echo "----------------------------------------"
         shopt -s nullglob
-        BARFILES=$BAR_FILE_DIR/*
-        for f in $BARFILES ; do
+        for f in /tmp/BARs/* ; do
           echo "Deploying $f ..."
           mqsideploy $NODE_NAME -e $SERVER_NAME -a $f -w 120
         done
