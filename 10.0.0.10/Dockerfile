@@ -9,6 +9,10 @@ FROM ubuntu:14.04
 
 MAINTAINER Sam Rogers srogers@uk.ibm.com
 
+LABEL "ProductID"="447aefb5fd1342d5b893f3934dfded73" \
+      "ProductName"="IBM Integration Bus" \
+      "ProductVersion"="10.0.0.10"
+
 # Install curl
 RUN apt-get update && \
     apt-get install -y curl && \
@@ -16,9 +20,9 @@ RUN apt-get update && \
 
 # Install IIB V10 Developer edition
 RUN mkdir /opt/ibm && \
-    curl http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/10.0.0.9-IIB-LINUX64-DEVELOPER.tar.gz \
-    | tar zx --exclude iib-10.0.0.9/tools --directory /opt/ibm && \
-    /opt/ibm/iib-10.0.0.9/iib make registry global accept license silently
+    curl http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/10.0.0.10-IIB-LINUX64-DEVELOPER.tar.gz \
+    | tar zx --exclude iib-10.0.0.10/tools --directory /opt/ibm && \
+    /opt/ibm/iib-10.0.0.10/iib make registry global accept license silently
 
 # Configure system
 COPY kernel_settings.sh /tmp/
