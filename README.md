@@ -41,7 +41,7 @@ For example:
 docker run --name myNode -e LICENSE=accept -e NODENAME=MYNODE -e SERVERNAME=MYSERVER -P iibv10image
 ~~~
 
-If you wish, you can also deploy an IBM Integration Bus BAR file by specifying a [Docker volume] (https://docs.docker.com/engine/admin/volumes/volumes/) which makes the BAR file(s) available when the container is started:
+If you wish, you can also deploy an IBM Integration Bus BAR file by specifying a [Docker volume](https://docs.docker.com/engine/admin/volumes/volumes/) which makes the BAR file(s) available when the container is started:
 ~~~
 docker run --name myNode -v  /local/path/to/BARs:/tmp/BARs -e LICENSE=accept -e NODENAME=MYNODE -e SERVERNAME=MYSERVER -P iibv10image 
 ~~~
