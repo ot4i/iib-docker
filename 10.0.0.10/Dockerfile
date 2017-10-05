@@ -12,9 +12,7 @@ MAINTAINER Sam Rogers srogers@uk.ibm.com
 LABEL "ProductID"="447aefb5fd1342d5b893f3934dfded73" \
       "ProductName"="IBM Integration Bus" \
       "ProductVersion"="10.0.0.10"
-
-ENV MQSI_MQTT_LOCAL_HOSTNAME=127.0.0.1
-	  
+  
 # Install curl
 RUN apt-get update && \
     apt-get install -y curl && \
@@ -52,6 +50,7 @@ RUN chmod +rx /usr/local/bin/*.sh
 
 # Set BASH_ENV to source mqsiprofile when using docker exec bash -c
 ENV BASH_ENV=/usr/local/bin/iib_env.sh
+ENV MQSI_MQTT_LOCAL_HOSTNAME=127.0.0.1
 
 # Expose default admin port and http port
 EXPOSE 4414 7800
