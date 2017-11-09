@@ -5,7 +5,7 @@
 # which accompanies this distribution, and is available at
 # http://www.eclipse.org/legal/epl-v10.html
 
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
 MAINTAINER Sam Rogers srogers@uk.ibm.com
 
