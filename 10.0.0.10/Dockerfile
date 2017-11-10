@@ -34,8 +34,7 @@ RUN echo "IIB_10:" > /etc/debian_chroot  && \
 
 
 # Create user to run as
-RUN useradd --create-home --home-dir /home/iibuser -G mqbrkrs,sudo iibuser && \
-    sed -e 's/^%sudo	.*/%sudo	ALL=NOPASSWD:ALL/g' -i /etc/sudoers
+RUN useradd --create-home --home-dir /home/iibuser -G mqbrkrs,sudo iibuser
 
 # Increase security
 RUN sed -i 's/sha512/sha512 minlen=8/'  /etc/pam.d/common-password && \
