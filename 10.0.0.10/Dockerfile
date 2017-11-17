@@ -15,7 +15,7 @@ LABEL "ProductID"="447aefb5fd1342d5b893f3934dfded73" \
 
 # Install curl
 RUN apt-get update && \
-    apt-get install -y curl && \
+    apt-get install -y curl rsyslog sudo && \
     rm -rf /var/lib/apt/lists/*
 
 # Install IIB V10 Developer edition
@@ -34,7 +34,8 @@ RUN echo "IIB_10:" > /etc/debian_chroot  && \
 
 
 # Create user to run as
-RUN useradd --create-home --home-dir /home/iibuser -G mqbrkrs,sudo iibuser
+RUN useradd --create-home --home-dir /home/iibuser -G mqbrkrs,sudo iibuser && \
+    sed -e 's/^%sudo	.*/%sudo	ALL=NOPASSWD:ALL/g' -i /etc/sudoers
 
 # Increase security
 RUN sed -i 's/sha512/sha512 minlen=8/'  /etc/pam.d/common-password && \
