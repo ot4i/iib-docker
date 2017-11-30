@@ -5,22 +5,22 @@
 # which accompanies this distribution, and is available at
 # http://www.eclipse.org/legal/epl-v10.html
 
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
-MAINTAINER Sam Rogers srogers@uk.ibm.com
+LABEL maintainer "Dan Robinson <dan.robinson@uk.ibm.com>, Sam Rogers <srogers@uk.ibm.com>"
 
 LABEL "ProductID"="447aefb5fd1342d5b893f3934dfded73" \
       "ProductName"="IBM Integration Bus" \
-      "ProductVersion"="10.0.0.10"
+      "ProductVersion"="10.0.0.11"
 
 # Install curl
 RUN apt-get update && \
-    apt-get install -y curl && \
+    apt-get install -y curl rsyslog sudo && \
     rm -rf /var/lib/apt/lists/*
 
 # Install IIB V10 Developer edition
 RUN mkdir /opt/ibm && \
-    curl http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/10.0.0.10-IIB-LINUX64-DEVELOPER.tar.gz \
+    curl http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/10.0.0.11-IIB-LINUX64-DEVELOPER.tar.gz \
     | tar zx --exclude iib-10.0.0.10/tools --directory /opt/ibm && \
     /opt/ibm/iib-10.0.0.10/iib make registry global accept license silently
 
