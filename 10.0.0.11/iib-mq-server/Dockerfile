@@ -58,9 +58,6 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   # Install MQ using the DEB packages
   && apt-get update \
   && apt-get install -y $MQ_PACKAGES \
-  # Remove 32-bit libraries from 64-bit container
-  && find /opt/mqm /var/mqm -type f -exec file {} \; \
-    | awk -F: '/ELF 32-bit/{print $1}' | xargs --no-run-if-empty rm -f \
   # Remove tar.gz files unpacked by RPM postinst scripts
   && find /opt/mqm -name '*.tar.gz' -delete \
   # Recommended: Set the default MQ installation (makes the MQ commands available on the PATH)
