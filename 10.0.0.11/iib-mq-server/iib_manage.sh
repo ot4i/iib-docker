@@ -18,6 +18,10 @@ stop()
 	echo "----------------------------------------"
 	echo "Stopping node $NODE_NAME..."
 	mqsistop $NODE_NAME
+        echo "----------------------------------------"
+        echo "Stopping node $NODE_NAME..."
+        endmqm $QMGR_NAME
+        exit
 }
 
 start()
@@ -36,7 +40,7 @@ start()
           echo "----------------------------------------"
           echo "Queue manager $QMGR_NAME does not exist..."
           echo "Creating queue manager $QMGR_NAME"
-          crtmqm -q ${QMGR_NAME}
+          crtmqm -q ${QMGR_NAME} -p
           echo "----------------------------------------"
           echo "Starting queue manager $QMGR_NAME"
           strmqm ${QMGR_NAME}
@@ -49,7 +53,7 @@ start()
         fi
 
 	echo "----------------------------------------"
-        /opt/ibm/iib-10.0.0.10/iib version
+        /opt/ibm/iib-10.0.0.11/iib version
 	echo "----------------------------------------"
 
         NODE_EXISTS=`mqsilist | grep $NODE_NAME > /dev/null ; echo $?`
@@ -59,7 +63,7 @@ start()
           echo "----------------------------------------"
           echo "Node $NODE_NAME does not exist..."
           echo "Creating node $NODE_NAME"
-          mqsicreatebroker $NODE_NAME
+          mqsicreatebroker -q $QMGR_NAME $NODE_NAME
           echo "----------------------------------------" 
           echo "----------------------------------------"
           echo "Starting syslog"
@@ -95,7 +99,7 @@ monitor()
 	echo "----------------------------------------"
 	echo "Running - stop container to exit"
 	# Loop forever by default - container must be stopped manually.
-	# Here is where you can add in conditions controlling when your container will exit - e.g. check for existence of specific processes stopping or errors beiing reported
+	# Here is where you can add in conditions controlling when your container will exit - e.g. check for existence of specific processes stopping or errors being reported
 	while true; do
 		sleep 1
 	done
