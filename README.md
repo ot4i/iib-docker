@@ -2,14 +2,26 @@
 
 This repository contains a Dockerfile and some scripts which demonstrate a way in which you might run [IBM Integration Bus](http://www-03.ibm.com/software/products/en/ibm-integration-bus) in a [Docker](https://www.docker.com/whatisdocker/) container.
 
+This repository also contains a Dockerfile and some scripts which demonstrate a way in which you might run [IBM Integration Bus](http://www-03.ibm.com/software/products/en/ibm-integration-bus) with an [IBM MQ] Server(http://www-03.ibm.com/software/products/en/ibm-mq).
+
 IBM would [welcome feedback](#issues-and-contributions) on what is offered here.
+
+# Docker Hub
+A pre-built version of the stand-alone IIB image is available on Docker Hub as [`ibmcom/iib`](https://hub.docker.com/r/ibmcom/iib/) with the following tags:
+
+  * `10.0.0.11`, `latest` ([Dockerfile](https://github.com/ot4i/iib-docker/blob/master/10.0.0.11/iib/Dockerfile))
+  * `10.0.0.10` ([Dockerfile](https://github.com/ot4i/iib-docker/blob/master/10.0.0.10/Dockerfile))
+  
+A pre-built version of the IIB with MQ Server image is available on Docker Hub as [`ibmcom/iib-mq-server`](https://hub.docker.com/r/ibmcom/iib-mq-server/) with the following tags:
+
+  * `10.0.0.11`, `latest` ([Dockerfile](https://github.com/ot4i/iib-docker/blob/master/10.0.0.11/iib-mq-server/Dockerfile))
 
 # Building the image
 
 The image can be built using standard [Docker commands](https://docs.docker.com/userguide/dockerimages/) against the supplied Dockerfile.  For example:
 
 ~~~
-cd 10.0.0.10
+cd 10.0.0.11/iib
 docker build -t iibv10image .
 ~~~
 
@@ -23,17 +35,19 @@ ubuntu         14.04     132b7427a3b4    3 weeks ago      188MB
 
 # What the image contains
 
-The built image contains a full installation of [IBM Integration Bus for Developers Edition V10.0](https://ibm.biz/iibdevedn).  It does not contain an installation of IBM MQ so some functionality may not be available, or may be changed - see this [topic](http://www-01.ibm.com/support/knowledgecenter/SSMKHH_10.0.0/com.ibm.etools.mft.doc/bb28660_.htm) for more information
+The built image contains a full installation of [IBM Integration Bus for Developers Edition V10.0](https://ibm.biz/iibdevedn). If you install the stand-alone image, which does not contain an installation of IBM MQ, some functionality may not be available, or may be changed - see this [topic](http://www-01.ibm.com/support/knowledgecenter/SSMKHH_10.0.0/com.ibm.etools.mft.doc/bb28660_.htm) for more information.
 
 # Running a container
 
 After building a Docker image from the supplied files, you can [run a container](https://docs.docker.com/userguide/usingdocker/) which will create and start an Integration Node to which you can [deploy](http://www-01.ibm.com/support/knowledgecenter/SSMKHH_10.0.0/com.ibm.etools.mft.doc/af03890_.htm) integration solutions.
 
+
+## Running with the default configuration
 In order to run a container from this image, it is necessary to accept the terms of the IBM Integration Bus for Developers license.  This is achieved by specifying the environment variable `LICENSE` equal to `accept` when running the image.  You can also view the license terms by setting this variable to `view`. Failure to set the variable will result in the termination of the container with a usage statement.  You can view the license in a different language by also setting the `LANG` environment variable.
 
-In addition to accepting the license, you can optionally specify an Integration Node name using the `NODENAME` environment variable and an Integration Server name using the `SERVERNAME` environment variable.
+In addition to accepting the license, you can optionally specify an Integration Node name using the `NODENAME` environment variable and an Integration Server name using the `SERVERNAME` environment variable. If using the image with MQ, you can also specify a Queue Manager name using the `MQ_QMGR_NAME` environment variable.
 
-The last important point of configuration when running a container from this image, is port mapping.  The Dockerfile exposes ports `4414` and `7800` by default, for Integration Node administration and Integration Server HTTP traffic respectively.  This means you can run with the `-P` flag to auto map these ports to ports on your host.  Alternatively you can use `-p` to expose and map any ports of your choice.
+The last important point of configuration when running a container from this image, is port mapping.  The Dockerfile exposes ports `4414` and `7800` by default, for Integration Node administration and Integration Server HTTP traffic respectively.  This means you can run with the `-P` flag to auto map these ports to ports on your host.  Alternatively you can use `-p` to expose and map any ports of your choice. The same applies to the image with MQ where the additional ports exposed by default are `1414` and 9443`, for the MQ listener and web console respectively.
 
 For example:
 
@@ -53,7 +67,20 @@ docker port <container name>
 
 to see which ports have been mapped then connect to the Node's web user interface as normal (see [verification](# Verifying your container is running correctly) section below).
 
+## Running with the default configuration and a volume
+The above example will not persist any configuration data or messages across container runs.  In order to do this, you need to use a [volume](https://docs.docker.com/engine/admin/volumes/volumes/).  For example, you can create a volume with the following command:
 
+```
+docker volume create qm1data
+```
+
+You can then run a queue manager using this volume as follows:
+
+```
+docker run --name myNode -e LICENSE=accept -e NODENAME=MYNODE -e SERVERNAME=MYSERVER -e MQ_QMGR_NAME=QM1 -v qm1data:/mnt/mqm -P iibv10image
+```
+
+The Docker image always uses `/mnt/mqm` for MQ data, which is correctly linked for you under `/var/mqm` at runtime.  This is to handle problems with file permissions on some platforms.
 
 ### Running administration commands
 
