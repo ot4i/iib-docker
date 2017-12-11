@@ -30,9 +30,8 @@ start()
         echo "Setting up /var/mqm"
         sudo setup-var-mqm.sh
         echo "----------------------------------------"
-        echo "----------------------------------------"
+        echo "Source the mq environment"
         mq-pre-create-setup.sh
-        echo "----------------------------------------"
 
 	QMGR_EXISTS=`dspmq | grep ${QMGR_NAME} > /dev/null ; echo $?`
 
@@ -40,11 +39,13 @@ start()
           echo "----------------------------------------"
           echo "Queue manager $QMGR_NAME does not exist..."
           echo "Creating queue manager $QMGR_NAME"
-          crtmqm -q ${QMGR_NAME} -p
+          crtmqm -q -p ${QMGR_NAME}
           echo "----------------------------------------"
           echo "Starting queue manager $QMGR_NAME"
           strmqm ${QMGR_NAME}
           echo "----------------------------------------"
+          echo "Configuring queue manager $QMGR_NAME"
+          source mq-config.sh
         else
           echo "----------------------------------------"
           echo "Starting queue manager $QMGR_NAME"
@@ -105,7 +106,7 @@ monitor()
 	done
 }
 
-iib-license-check.sh
+license-check.sh
 start
 trap stop SIGTERM SIGINT
 monitor
