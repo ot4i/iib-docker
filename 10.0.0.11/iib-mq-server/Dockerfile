@@ -82,7 +82,7 @@ ARG IIB_URL=http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integr
 RUN mkdir /opt/ibm && \
     curl $IIB_URL \ 
     | tar zx --exclude iib-10.0.0.11/tools --directory /opt/ibm && \
-    /opt/ibm/iib-10.0.0.11/iib make registry global accept license silently
+    /opt/ibm/iib-10.0.0.10/iib make registry global accept license silently
 
 # Configure system
 RUN echo "IIB_10:" > /etc/debian_chroot  && \
