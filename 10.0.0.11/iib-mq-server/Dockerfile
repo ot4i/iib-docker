@@ -11,7 +11,9 @@ ARG MQ_URL=https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messag
 
 # The MQ packages to install
 ARG MQ_PACKAGES="ibmmq-server ibmmq-java ibmmq-jre ibmmq-gskit ibmmq-msg-.* ibmmq-client ibmmq-sdk ibmmq-samples ibmmq-ft*"
-RUN export DEBIAN_FRONTEND=noninteractive \ # Install additional packages required by MQ and IIB, this install process and the runtime scripts
+
+# Install additional packages required by MQ and IIB, this install process and the runtime scripts
+RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get update -y \
   && apt-get install -y --no-install-recommends \
     bash \
