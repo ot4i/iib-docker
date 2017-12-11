@@ -11,9 +11,7 @@ ARG MQ_URL=https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messag
 
 # The MQ packages to install
 ARG MQ_PACKAGES="ibmmq-server ibmmq-java ibmmq-jre ibmmq-gskit ibmmq-msg-.* ibmmq-client ibmmq-sdk ibmmq-samples ibmmq-ft*"
-
-RUN export DEBIAN_FRONTEND=noninteractive \
-  # Install additional packages required by MQ and IIB, this install process and the runtime scripts
+RUN export DEBIAN_FRONTEND=noninteractive \ # Install additional packages required by MQ and IIB, this install process and the runtime scripts
   && apt-get update -y \
   && apt-get install -y --no-install-recommends \
     bash \
@@ -91,7 +89,8 @@ RUN echo "IIB_10:" > /etc/debian_chroot  && \
 
 # Create user to run as
 RUN groupadd -f mqbrkrs && \
-    useradd --create-home --home-dir /home/iibuser -G mqbrkrs,sudo,mqm iibuser && \
+    groupadd -f mqclient && \
+    useradd --create-home --home-dir /home/iibuser -G mqbrkrs,sudo,mqm,mqclient iibuser && \
     sed -e 's/^%sudo	.*/%sudo	ALL=NOPASSWD:ALL/g' -i /etc/sudoers
 
 # Copy in script files

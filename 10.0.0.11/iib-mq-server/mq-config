@@ -13,6 +13,10 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 
+* Set authorities
+SET AUTHREC OBJTYPE(QMGR) AUTHADD(CONNECT,INQ)
+SET AUTHREC PROFILE(*) OBJTYPE(QUEUE) GROUP(MQCLIENT) AUTHADD(PUT,GET,BROWSE,INQ)
+
 * Queues
 DEFINE QLOCAL('QUEUE.1') REPLACE
 DEFINE QLOCAL('QUEUE.2') REPLACE
