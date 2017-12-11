@@ -42,8 +42,6 @@ configure_os_user()
 
 
 # Set default unless it is set
-MQ_ADMIN_NAME="admin"
-MQ_ADMIN_PASSWORD=${MQ_ADMIN_PASSWORD:-"passw0rd"}
 MQ_APP_NAME="iibuser"
 MQ_APP_PASSWORD=${MQ_APP_PASSWORD:-""}
 
@@ -61,10 +59,7 @@ configure_os_user mqclient MQ_APP_NAME MQ_APP_PASSWORD /home/iibuser
 # Set authorities to give access to qmgr, queues and topic
 su -l mqm -c "setmqaut -m ${MQ_QMGR_NAME} -t qmgr -g mqclient +connect +inq"
 su -l mqm -c "setmqaut -m ${MQ_QMGR_NAME} -n \"**\" -t queue -g mqclient +put +get +browse +inq"
-su -l mqm -c "setmqaut -m ${MQ_QMGR_NAME} -n \"**\" -t topic -g mqclient +sub +pub"
 
-echo "Configuring admin user"
-configure_os_user mqm MQ_ADMIN_NAME MQ_ADMIN_PASSWORD /home/admin
 
 echo "Configuring default objects for queue manager: ${MQ_QMGR_NAME}"
 set +e
