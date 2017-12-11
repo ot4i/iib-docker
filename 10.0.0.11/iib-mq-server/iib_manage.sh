@@ -45,7 +45,7 @@ start()
           strmqm ${QMGR_NAME}
           echo "----------------------------------------"
           echo "Configuring queue manager $QMGR_NAME"
-          source mq-config.sh
+          sudo source mq-config.sh
         else
           echo "----------------------------------------"
           echo "Starting queue manager $QMGR_NAME"
@@ -54,7 +54,7 @@ start()
         fi
 
 	echo "----------------------------------------"
-        /opt/ibm/iib-10.0.0.11/iib version
+        /opt/ibm/iib-10.0.0.10/iib version
 	echo "----------------------------------------"
 
         NODE_EXISTS=`mqsilist | grep $NODE_NAME > /dev/null ; echo $?`
