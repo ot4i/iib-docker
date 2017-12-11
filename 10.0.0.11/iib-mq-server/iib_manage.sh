@@ -39,7 +39,7 @@ start()
           echo "----------------------------------------"
           echo "Queue manager $QMGR_NAME does not exist..."
           echo "Creating queue manager $QMGR_NAME"
-          crtmqm -q -p ${QMGR_NAME}
+          crtmqm -q -p 1414 ${QMGR_NAME}
           echo "----------------------------------------"
           echo "Starting queue manager $QMGR_NAME"
           strmqm ${QMGR_NAME}

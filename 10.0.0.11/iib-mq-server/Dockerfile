@@ -105,7 +105,7 @@ ENV BASH_ENV=/usr/local/bin/iib_env.sh
 
 ENV LANG=en_US.UTF-8
 
-# Expose default admin port and http ports and web console
+# Expose default admin port and http ports
 EXPOSE 4414 7800 1414
 
 USER iibuser
