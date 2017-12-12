@@ -24,7 +24,7 @@ INSTALLATION=`dspmqver -b -f 512`
 
 echo "Configuring default objects for queue manager: ${MQ_QMGR_NAME}"
 set +e
-runmqsc ${MQ_QMGR_NAME} < /home/iibuser/mq-config
+runmqsc ${MQ_QMGR_NAME} < /etc/mqm/mq-config
 
 # If client password set to "" allow users to connect to application channel without a userid
 if [ "${MQ_APP_PASSWORD}" == "" ]; then
