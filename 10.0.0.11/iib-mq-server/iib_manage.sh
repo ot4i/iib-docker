@@ -45,7 +45,7 @@ start()
           strmqm ${QMGR_NAME}
           echo "----------------------------------------"
           echo "Configuring queue manager $QMGR_NAME"
-          source mq-config.sh
+          sudo mq-config.sh
         else
           echo "----------------------------------------"
           echo "Starting queue manager $QMGR_NAME"

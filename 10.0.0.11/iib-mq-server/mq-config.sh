@@ -17,10 +17,35 @@
 
 set -e
 
-# Set needed variables to point to various MQ directories
-DATA_PATH=`dspmqver -b -f 4096`
-INSTALLATION=`dspmqver -b -f 512`
+configure_os_user()
+{
+  # The group ID of the user to configure
+  local -r GROUP_NAME=$1
+  # Name of environment variable containing the user name
+  local -r USER_VAR=$2
+  # Name of environment variable containing the password
+  local -r PASSWORD=$3
+  # Home directory for the user
+  local -r HOME=$4
+  # Determine the login name of the user (assuming it exists already)
 
+  # if user does not exist
+  if ! id ${!USER_VAR} 2>1 > /dev/null; then
+    # create
+    useradd --gid ${GROUP_NAME} --home ${HOME} ${!USER_VAR}
+  fi
+  # Change the user's password (if set)
+  if [ ! "${!PASSWORD}" == "" ]; then
+    echo ${!USER_VAR}:${!PASSWORD} | chpasswd
+  fi
+}
+
+# Set default unless it is set
+MQ_APP_NAME="iibmquser"
+MQ_APP_PASSWORD=${MQ_APP_PASSWORD:-""}
+
+echo "Configuring iibappuser user"
+configure_os_user mqclient MQ_APP_NAME MQ_APP_PASSWORD /home/iibmquser
 
 echo "Configuring default objects for queue manager: ${MQ_QMGR_NAME}"
 set +e
