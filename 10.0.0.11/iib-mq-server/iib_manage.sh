@@ -79,6 +79,7 @@ monitor()
 	done
 }
 
+source /opt/ibm/iib-10.0.0.11/server/bin/mqsiprofile
 start_iib
 trap stop SIGTERM SIGINT
 monitor
