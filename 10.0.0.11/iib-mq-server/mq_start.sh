@@ -47,5 +47,5 @@ start_mq()
 
 license-check.sh
 start_mq
-su - iibuser -c "iib_manage.sh"
+su -m iibuser -c "iib_manage.sh"
 
