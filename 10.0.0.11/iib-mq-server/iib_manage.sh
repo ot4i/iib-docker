@@ -24,35 +24,8 @@ stop()
         exit
 }
 
-start()
+start_iib()
 {
-        echo "----------------------------------------"
-        echo "Setting up /var/mqm"
-        sudo setup-var-mqm.sh
-        echo "----------------------------------------"
-        echo "Source the mq environment"
-        mq-pre-create-setup.sh
-
-	QMGR_EXISTS=`dspmq | grep ${QMGR_NAME} > /dev/null ; echo $?`
-
-        if [ ${QMGR_EXISTS} -ne 0 ]; then
-          echo "----------------------------------------"
-          echo "Queue manager $QMGR_NAME does not exist..."
-          echo "Creating queue manager $QMGR_NAME"
-          crtmqm -q -p 1414 ${QMGR_NAME}
-          echo "----------------------------------------"
-          echo "Starting queue manager $QMGR_NAME"
-          strmqm ${QMGR_NAME}
-          echo "----------------------------------------"
-          echo "Configuring queue manager $QMGR_NAME"
-          sudo mq-config.sh
-        else
-          echo "----------------------------------------"
-          echo "Starting queue manager $QMGR_NAME"
-          strmqm ${QMGR_NAME}
-          echo "----------------------------------------" 
-        fi
-
 	echo "----------------------------------------"
         /opt/ibm/iib-10.0.0.10/iib version
 	echo "----------------------------------------"
@@ -106,7 +79,6 @@ monitor()
 	done
 }
 
-license-check.sh
-start
+start_iib
 trap stop SIGTERM SIGINT
 monitor

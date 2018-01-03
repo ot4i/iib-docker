@@ -110,7 +110,5 @@ ENV LANG=en_US.UTF-8
 # Expose default admin port and http ports
 EXPOSE 4414 7800 1414
 
-USER iibuser
-
 # Set entrypoint to run management script
-ENTRYPOINT ["iib_manage.sh"]
+ENTRYPOINT ["mq_start.sh"]
