@@ -43,6 +43,7 @@ start_mq()
           strmqm ${QMGR_NAME}
           echo "----------------------------------------"
         fi
+}
 
 license-check.sh
 start_mq
