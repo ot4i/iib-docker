@@ -101,6 +101,8 @@ COPY mq-config /etc/mqm/mq-config
 RUN chmod 755 /usr/local/bin/*.sh \
   && chmod 755 /etc/mqm/mq-config
 
+# Set BASH_ENV to source mqsiprofile when using docker exec bash -c
+ENV BASH_ENV=/usr/local/bin/iib_env.sh
 
 ENV LANG=en_US.UTF-8
 
@@ -108,4 +110,4 @@ ENV LANG=en_US.UTF-8
 EXPOSE 4414 7800 1414
 
 # Set entrypoint to run management script
-ENTRYPOINT ["mq_start.sh"]
+ENTRYPOINT ["iib_manage.sh"]

@@ -79,7 +79,9 @@ monitor()
 	done
 }
 
-source /opt/ibm/iib-10.0.0.10/server/bin/mqsiprofile
+license-check.sh
+su -m root -c "mq_start.sh"
 start_iib
 trap stop SIGTERM SIGINT
 monitor
+
