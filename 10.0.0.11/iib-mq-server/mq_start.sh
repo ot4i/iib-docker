@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # © Copyright IBM Corporation 2015.
 #
 # All rights reserved. This program and the accompanying materials
