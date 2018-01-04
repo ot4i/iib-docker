@@ -102,9 +102,6 @@ RUN chmod 755 /usr/local/bin/*.sh \
   && chmod 755 /etc/mqm/mq-config
 
 
-# Set BASH_ENV to source mqsiprofile when using docker exec bash -c
-ENV BASH_ENV=/usr/local/bin/iib_env.sh
-
 ENV LANG=en_US.UTF-8
 
 # Expose default admin port and http ports
