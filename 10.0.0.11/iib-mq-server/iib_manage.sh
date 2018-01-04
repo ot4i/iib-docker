@@ -79,6 +79,7 @@ monitor()
 	done
 }
 
+/usr/local/bin/iib_env.sh
 start_iib
 trap stop SIGTERM SIGINT
 monitor
