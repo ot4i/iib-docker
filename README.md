@@ -47,7 +47,7 @@ In order to run a container from this image, it is necessary to accept the terms
 
 In addition to accepting the license, you can optionally specify an Integration Node name using the `NODENAME` environment variable and an Integration Server name using the `SERVERNAME` environment variable. If using the image with MQ, you can also specify a Queue Manager name using the `MQ_QMGR_NAME` environment variable.
 
-The last important point of configuration when running a container from this image, is port mapping.  The Dockerfile exposes ports `4414` and `7800` by default, for Integration Node administration and Integration Server HTTP traffic respectively.  This means you can run with the `-P` flag to auto map these ports to ports on your host.  Alternatively you can use `-p` to expose and map any ports of your choice. The same applies to the image with MQ where the additional ports exposed by default are `1414` and 9443`, for the MQ listener and web console respectively.
+The last important point of configuration when running a container from this image, is port mapping.  The Dockerfile exposes ports `4414` and `7800` by default, for Integration Node administration and Integration Server HTTP traffic respectively.  This means you can run with the `-P` flag to auto map these ports to ports on your host.  Alternatively you can use `-p` to expose and map any ports of your choice. The same applies to the image with MQ where the additional port exposed by default is `1414` for the MQ listener.
 
 For example:
 
@@ -82,6 +82,14 @@ docker run --name myNode -e LICENSE=accept -e NODENAME=MYNODE -e SERVERNAME=MYSE
 
 The Docker image always uses `/mnt/mqm` for MQ data, which is correctly linked for you under `/var/mqm` at runtime.  This is to handle problems with file permissions on some platforms.
 
+## Customizing the queue manager configuration
+You can customize the configuration in several ways:
+
+1. By creating your own image and adding your own MQSC file into the `/etc/mqm` directory on the image.  This file will be run when your queue manager is created.
+2. By using [remote MQ administration](http://www-01.ibm.com/support/knowledgecenter/SSFKSJ_9.0.0/com.ibm.mq.adm.doc/q021090_.htm), via an MQ command server, the MQ HTTP APIs, or using a tool such as the MQ web console or MQ Explorer.
+
+Note that a listener is always created on port 1414 inside the container.  This port can be mapped to any port on the Docker host.
+
 ### Running administration commands
 
 You can run any of the Integration Bus
@@ -105,6 +113,15 @@ Use Docker exec to run a non-interactive Bash session that runs any of the Integ
 docker exec <container name> /bin/bash -c mqsilist
 ~~~
 
+## Running MQ commands
+It is recommended that you configure MQ in your own custom image.  However, you may need to run MQ commands directly inside the process space of the container.  To run a command against a running queue manager, you can use `docker exec`, for example:
+
+```
+docker exec -it <container name> dspmq
+```
+
+Using this technique, you can have full control over all aspects of the MQ installation.  Note that if you use this technique to make changes to the filesystem, then those changes would be lost if you re-created your container unless you make those changes in volumes.
+
 ### Accessing logs
 
 This image also configures syslog, so when you run a container, your node will be outputting messages to /var/log/syslog inside the container.  You can access this by attaching a bash session as described above or by using docker exec.  For example:
@@ -125,6 +142,15 @@ Whether you are using the image as provided or if you have customised it, here a
 At this point, your container is running and you can [deploy](http://www-01.ibm.com/support/knowledgecenter/SSMKHH_10.0.0/com.ibm.etools.mft.doc/af03890_.htm) integration solutions to it using any of the supported methods.
 
 
+## List of all Environment variables supported by this image
+
+* **LICENSE** - Set this to `accept` to agree to the MQ Advanced for Developers license. If you wish to see the license you can set this to `view`.
+* **LANG** - Set this to the language you would like the license to be printed in.
+* **NODENAME** - Set this to the name you want your Integration Node to be created with.
+* **SERVERNAME** - Set this to the name you want your Integration Server to be created with.
+* **MQ_QMGR_NAME** - Set this to the name you want your Queue Manager to be created with.
+* **MQ_APP_PASSWORD** - Changes the password of the app user. If set, this will cause the `IIB.SVRCONN` channel to become secured and only allow connections that supply a valid userid and password. Must be at least 8 characters long.
+
 
 # Issues and contributions
 
@@ -132,4 +158,10 @@ For issues relating specifically to this Docker image, please use the [GitHub is
 
 # License
 
-The Dockerfile and associated scripts are licensed under the [Eclipse Public License 1.0](./LICENSE). IBM Integration Bus for Developers is licensed under the IBM International License Agreement for Non-Warranted Programs. This license may be viewed from the image using the `LICENSE=view` environment variable as described above. Note that this license does not permit further distribution.
+The Dockerfile and associated scripts are licensed under the [Eclipse Public License 1.0](./LICENSE). Licenses for the products installed within the images are as follows:
+
+ - IBM Integration Bus for Developers is licensed under the IBM International License Agreement for Non-Warranted Programs. This license may be viewed from the image using the `LICENSE=view` environment variable as described above.
+ - IBM MQ Advanced for Developers is licensed under the IBM International License Agreement for Non-Warranted Programs. This license may be viewed from the image using the `LICENSE=view` environment variable as described above.
+ - License information for Ubuntu packages may be found in `/usr/share/doc/${package}/copyright`
+
+Note that this license does not permit further distribution.
