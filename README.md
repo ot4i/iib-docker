@@ -164,4 +164,4 @@ The Dockerfile and associated scripts are licensed under the [Eclipse Public Lic
  - IBM MQ Advanced for Developers is licensed under the IBM International License Agreement for Non-Warranted Programs. This license may be viewed from the image using the `LICENSE=view` environment variable as described above.
  - License information for Ubuntu packages may be found in `/usr/share/doc/${package}/copyright`
 
-Note that this license does not permit further distribution.
+Note that the IBM Integration Bus for Developers license does not permit further distribution. The IBM MQ Advanced for Developers license does not permit further distribution and the terms restrict usage to a developer machine.
