@@ -90,12 +90,12 @@ You can customize the configuration in several ways:
 
 Note that a listener is always created on port 1414 inside the container.  This port can be mapped to any port on the Docker host.
 
-### Running administration commands
+## Running administration commands
 
 You can run any of the Integration Bus
  commands using one of two methods:
 
-##### Directly in the container
+#### Directly in the container
 
 Attach a bash session to your container and execute your commands as you would normally:
 
@@ -105,7 +105,7 @@ docker exec -it <container name> /bin/bash
 
 At this point you will be in a shell inside the container and can source `mqsiprofile` and run your commands.
 
-##### Using Docker exec
+#### Using Docker exec
 
 Use Docker exec to run a non-interactive Bash session that runs any of the Integration Bus commands.  For example:
 
@@ -122,7 +122,7 @@ docker exec -it <container name> dspmq
 
 Using this technique, you can have full control over all aspects of the MQ installation.  Note that if you use this technique to make changes to the filesystem, then those changes would be lost if you re-created your container unless you make those changes in volumes.
 
-### Accessing logs
+## Accessing logs
 
 This image also configures syslog, so when you run a container, your node will be outputting messages to /var/log/syslog inside the container.  You can access this by attaching a bash session as described above or by using docker exec.  For example:
 
@@ -142,7 +142,7 @@ Whether you are using the image as provided or if you have customised it, here a
 At this point, your container is running and you can [deploy](http://www-01.ibm.com/support/knowledgecenter/SSMKHH_10.0.0/com.ibm.etools.mft.doc/af03890_.htm) integration solutions to it using any of the supported methods.
 
 
-## List of all Environment variables supported by this image
+# List of all Environment variables supported by this image
 
 * **LICENSE** - Set this to `accept` to agree to the MQ Advanced for Developers license. If you wish to see the license you can set this to `view`.
 * **LANG** - Set this to the language you would like the license to be printed in.
@@ -164,4 +164,4 @@ The Dockerfile and associated scripts are licensed under the [Eclipse Public Lic
  - IBM MQ Advanced for Developers is licensed under the IBM International License Agreement for Non-Warranted Programs. This license may be viewed from the image using the `LICENSE=view` environment variable as described above.
  - License information for Ubuntu packages may be found in `/usr/share/doc/${package}/copyright`
 
-Note that this license does not permit further distribution.
+Note that the IBM Integration Bus for Developers license does not permit further distribution. The IBM MQ Advanced for Developers license does not permit further distribution and the terms restrict usage to a developer machine.
