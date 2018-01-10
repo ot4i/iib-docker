@@ -76,13 +76,13 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && sed -i 's/PASS_MIN_DAYS\t0/PASS_MIN_DAYS\t1/' /etc/login.defs \
   && sed -i 's/password\t\[success=1 default=ignore\]\tpam_unix\.so obscure sha512/password\t[success=1 default=ignore]\tpam_unix.so obscure sha512 minlen=8/' /etc/pam.d/common-password
 
-ARG IIB_URL=http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/10.0.0.10-IIB-LINUX64-DEVELOPER.tar.gz
+ARG IIB_URL=http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/10.0.0.11-IIB-LINUX64-DEVELOPER.tar.gz
 
 # Install IIB V10 Developer edition
 RUN mkdir /opt/ibm && \
     curl $IIB_URL \ 
     | tar zx --exclude iib-10.0.0.11/tools --directory /opt/ibm && \
-    /opt/ibm/iib-10.0.0.10/iib make registry global accept license silently
+    /opt/ibm/iib-10.0.0.11/iib make registry global accept license silently
 
 # Configure system
 RUN echo "IIB_10:" > /etc/debian_chroot  && \
