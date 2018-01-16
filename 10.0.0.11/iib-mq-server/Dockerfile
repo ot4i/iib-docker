@@ -42,12 +42,6 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && cd ${DIR_EXTRACT} \
   && curl -LO $MQ_URL \
   && tar -zxvf ./*.tar.gz \
-  # Recommended: Remove packages only needed by this script
-#  && apt-get purge -y \
-#    ca-certificates \
-#    curl \
-  # Recommended: Remove any orphaned packages
-#  && apt-get autoremove -y --purge \
   # Recommended: Create the mqm user ID with a fixed UID and group, so that the file permissions work between different images
   && groupadd --system --gid 999 mqm \
   && useradd --system --uid 999 --gid mqm mqm \
@@ -102,9 +96,7 @@ RUN chmod 755 /usr/local/bin/*.sh \
   && chmod 755 /etc/mqm/mq-config
 
 # Set BASH_ENV to source mqsiprofile when using docker exec bash -c
-ENV BASH_ENV=/usr/local/bin/iib_env.sh
-
-ENV LANG=en_US.UTF-8
+ENV BASH_ENV=/usr/local/bin/iib_env.sh MQSI_MQTT_LOCAL_HOSTNAME=127.0.0.1 LANG=en_US.UTF-8
 
 # Expose default admin port and http ports
 EXPOSE 4414 7800 1414
