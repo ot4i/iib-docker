@@ -13,6 +13,9 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 
+* Turn qmgr chlauth back on
+ALTER QMGR CHLAUTH(ENABLED)
+
 * Set authorities
 SET AUTHREC OBJTYPE(QMGR) GROUP('mqclient') AUTHADD(CONNECT,INQ)
 SET AUTHREC PROFILE(QUEUE.IN) OBJTYPE(QUEUE) GROUP('mqclient') AUTHADD(PUT,GET,BROWSE,INQ)

@@ -33,6 +33,13 @@ iibv10image    latest    b8403ecfcd0d    2 seconds ago    1.15GB
 ubuntu         14.04     132b7427a3b4    3 weeks ago      188MB
 ~~~
 
+If you wish to build the image with an MQ install, then run something like the following:
+
+~~~
+cd 10.0.0.11/iib-mq-server
+docker build -t iib-mq-image .
+~~~
+
 # What the image contains
 
 The built image contains a full installation of [IBM Integration Bus for Developers Edition V10.0](https://ibm.biz/iibdevedn). If you install the stand-alone image, which does not contain an installation of IBM MQ, some functionality may not be available, or may be changed - see this [topic](http://www-01.ibm.com/support/knowledgecenter/SSMKHH_10.0.0/com.ibm.etools.mft.doc/bb28660_.htm) for more information.
@@ -57,7 +64,7 @@ docker run --name myNode -e LICENSE=accept -e NODENAME=MYNODE -e SERVERNAME=MYSE
 
 If you wish, you can also deploy an IBM Integration Bus BAR file by specifying a [Docker volume](https://docs.docker.com/engine/admin/volumes/volumes/) which makes the BAR file(s) available when the container is started:
 ~~~
-docker run --name myNode -v  /local/path/to/BARs:/tmp/BARs -e LICENSE=accept -e NODENAME=MYNODE -e SERVERNAME=MYSERVER -P iibv10image 
+docker run --name myNode -v  /local/path/to/BARs:/tmp/BARs/<yourbars> -e LICENSE=accept -e NODENAME=MYNODE -e SERVERNAME=MYSERVER -P iibv10image 
 ~~~
 
 This will run a container that creates and starts an Integration Node called `MYNODE` and exposes ports `4414` and `7800` on random ports on the host machine.  At this point you can use:
