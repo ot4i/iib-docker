@@ -101,5 +101,7 @@ ENV BASH_ENV=/usr/local/bin/iib_env.sh MQSI_MQTT_LOCAL_HOSTNAME=127.0.0.1 LANG=e
 # Expose default admin port and http ports
 EXPOSE 4414 7800 1414
 
+USER iibuser
+
 # Set entrypoint to run management script
 ENTRYPOINT ["iib_manage.sh"]

@@ -8,19 +8,18 @@
 
 set -e
 
-QMGR_NAME=${MQ_QMGR_NAME}
-NODE_NAME=${NODENAME-IIBV10NODE}
-SERVER_NAME=${SERVERNAME-default}
-MQSI_MQTT_LOCAL_HOSTNAME=127.0.0.1
+MQ_QMGR_NAME=${MQ_QMGR_NAME}
+NODENAME=${NODENAME-IIBV10NODE}
+SERVERNAME=${SERVERNAME-default}
 
 stop()
 {
 	echo "----------------------------------------"
-	echo "Stopping node $NODE_NAME..."
-	mqsistop $NODE_NAME
+	echo "Stopping node $NODENAME..."
+	mqsistop $NODENAME
         echo "----------------------------------------"
-        echo "Stopping node $NODE_NAME..."
-        endmqm $QMGR_NAME
+        echo "Stopping node $NODENAME..."
+        endmqm $MQ_QMGR_NAME
         exit
 }
 
@@ -30,30 +29,30 @@ start_iib()
         /opt/ibm/iib-10.0.0.11/iib version
 	echo "----------------------------------------"
 
-        NODE_EXISTS=`mqsilist | grep $NODE_NAME > /dev/null ; echo $?`
+        NODE_EXISTS=`mqsilist | grep $NODENAME > /dev/null ; echo $?`
 
 
 	if [ ${NODE_EXISTS} -ne 0 ]; then
           echo "----------------------------------------"
-          echo "Node $NODE_NAME does not exist..."
-          echo "Creating node $NODE_NAME"
-          mqsicreatebroker -q $QMGR_NAME $NODE_NAME
+          echo "Node $NODENAME does not exist..."
+          echo "Creating node $NODENAME"
+          mqsicreatebroker -q $MQ_QMGR_NAME $NODENAME
           echo "----------------------------------------" 
           echo "----------------------------------------"
           echo "Starting syslog"
           sudo /usr/sbin/rsyslogd
-          echo "Starting node $NODE_NAME"
-          mqsistart $NODE_NAME
+          echo "Starting node $NODENAME"
+          mqsistart $NODENAME
           echo "----------------------------------------" 
           echo "----------------------------------------"
-          echo "Creating integration server $SERVER_NAME"
-          mqsicreateexecutiongroup $NODE_NAME -e $SERVER_NAME -w 120
+          echo "Creating integration server $SERVERNAME"
+          mqsicreateexecutiongroup $NODENAME -e $SERVERNAME -w 120
           echo "----------------------------------------"
           echo "----------------------------------------"
           shopt -s nullglob
           for f in /tmp/BARs/* ; do
             echo "Deploying $f ..."
-            mqsideploy $NODE_NAME -e $SERVER_NAME -a $f -w 120
+            mqsideploy $NODENAME -e $SERVERNAME -a $f -w 120
           done		  
           echo "----------------------------------------"
           echo "----------------------------------------"
@@ -61,8 +60,8 @@ start_iib()
           echo "----------------------------------------"
           echo "Starting syslog"
           sudo /usr/sbin/rsyslogd
-          echo "Starting node $NODE_NAME"
-          mqsistart $NODE_NAME
+          echo "Starting node $NODENAME"
+          mqsistart $NODENAME
           echo "----------------------------------------" 
           echo "----------------------------------------"
 	fi
@@ -80,7 +79,7 @@ monitor()
 }
 
 license-check.sh
-su -m root -c "mq_start.sh"
+sudo -u root mq_start.sh
 start_iib
 trap stop SIGTERM SIGINT
 monitor

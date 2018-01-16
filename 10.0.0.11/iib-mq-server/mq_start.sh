@@ -8,10 +8,7 @@
 
 set -e
 
-QMGR_NAME=${MQ_QMGR_NAME}
-NODE_NAME=${NODENAME-IIBV10NODE}
-SERVER_NAME=${SERVERNAME-default}
-MQSI_MQTT_LOCAL_HOSTNAME=127.0.0.1
+MQ_QMGR_NAME=${MQ_QMGR_NAME-QM1}
 
 start_mq()
 {
@@ -22,28 +19,28 @@ start_mq()
         echo "Source the mq environment"
         mq-pre-create-setup.sh
 
-        QMGR_EXISTS=`dspmq | grep ${QMGR_NAME} > /dev/null ; echo $?`
+        QMGR_EXISTS=`dspmq | grep ${MQ_QMGR_NAME} > /dev/null ; echo $?`
 
         if [ ${QMGR_EXISTS} -ne 0 ]; then
           echo "----------------------------------------"
-          echo "Queue manager $QMGR_NAME does not exist..."
-          echo "Creating queue manager $QMGR_NAME"
-          crtmqm -q -p 1414 ${QMGR_NAME}
+          echo "Queue manager $MQ_QMGR_NAME does not exist..."
+          echo "Creating queue manager $MQ_QMGR_NAME"
+          crtmqm -q -p 1414 ${MQ_QMGR_NAME}
           echo "----------------------------------------"
-          echo "Starting queue manager $QMGR_NAME"
-          strmqm ${QMGR_NAME}
+          echo "Starting queue manager $MQ_QMGR_NAME"
+          strmqm ${MQ_QMGR_NAME}
           echo "----------------------------------------"
           echo "Creating iib queues"
-          /opt/ibm/iib-10.0.0.11/server/sample/wmq/iib_createqueues.sh $QMGR_NAME mqbrkrs
+          /opt/ibm/iib-10.0.0.11/server/sample/wmq/iib_createqueues.sh $MQ_QMGR_NAME mqbrkrs
           echo "----------------------------------------"
-          echo "Configuring queue manager $QMGR_NAME"
+          echo "Configuring queue manager $MQ_QMGR_NAME"
           source mq-config.sh
           echo "----------------------------------------"
           source mq-configure-qmgr.sh
         else
           echo "----------------------------------------"
-          echo "Starting queue manager $QMGR_NAME"
-          strmqm ${QMGR_NAME}
+          echo "Starting queue manager $MQ_QMGR_NAME"
+          strmqm ${MQ_QMGR_NAME}
           echo "----------------------------------------"
         fi
 }
