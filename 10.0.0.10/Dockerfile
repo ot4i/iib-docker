@@ -12,7 +12,7 @@ MAINTAINER Sam Rogers srogers@uk.ibm.com
 LABEL "ProductID"="447aefb5fd1342d5b893f3934dfded73" \
       "ProductName"="IBM Integration Bus" \
       "ProductVersion"="10.0.0.10"
-
+  
 # Install curl
 RUN apt-get update && \
     apt-get install -y curl && \

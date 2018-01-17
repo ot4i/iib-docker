@@ -25,12 +25,10 @@ RUN mkdir /opt/ibm && \
     /opt/ibm/iib-10.0.0.11/iib make registry global accept license silently
 
 # Configure system
-COPY kernel_settings.sh /tmp/
 RUN echo "IIB_10:" > /etc/debian_chroot  && \
     touch /var/log/syslog && \
-    chown syslog:adm /var/log/syslog && \
-    chmod +x /tmp/kernel_settings.sh;sync && \
-    /tmp/kernel_settings.sh
+    chown syslog:adm /var/log/syslog
+
 
 
 # Create user to run as
