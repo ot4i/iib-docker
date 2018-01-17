@@ -8,7 +8,7 @@
 
 set -e
 
-MQ_QMGR_NAME=${MQ_QMGR_NAME}
+MQ_QMGR_NAME=${MQ_QMGR_NAME-QM1}
 NODENAME=${NODENAME-IIBV10NODE}
 SERVERNAME=${SERVERNAME-default}
 
@@ -79,7 +79,7 @@ monitor()
 }
 
 license-check.sh
-sudo -u root mq_start.sh
+sudo -u root -E mq_start.sh
 start_iib
 trap stop SIGTERM SIGINT
 monitor

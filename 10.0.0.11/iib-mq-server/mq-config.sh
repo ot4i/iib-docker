@@ -44,7 +44,7 @@ configure_os_user()
 MQ_APP_NAME="iibmquser"
 MQ_APP_PASSWORD=${MQ_APP_PASSWORD:-""}
 
-echo "Configuring iibappuser user"
+echo "Configuring mq app user (iibmquser)"
 configure_os_user mqclient MQ_APP_NAME MQ_APP_PASSWORD /home/iibmquser
 
 echo "Configuring default objects for queue manager: ${MQ_QMGR_NAME}"
