@@ -30,6 +30,7 @@ RUN echo "IIB_10:" > /etc/debian_chroot  && \
     chown syslog:adm /var/log/syslog
 
 
+
 # Create user to run as
 RUN useradd --create-home --home-dir /home/iibuser -G mqbrkrs,sudo iibuser && \
     sed -e 's/^%sudo	.*/%sudo	ALL=NOPASSWD:ALL/g' -i /etc/sudoers
