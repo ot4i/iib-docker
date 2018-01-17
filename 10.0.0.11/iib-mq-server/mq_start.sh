@@ -45,4 +45,5 @@ start_mq()
         fi
 }
 
+source /opt/ibm/iib-10.0.0.11/server/bin/mqsiprofile
 start_mq
