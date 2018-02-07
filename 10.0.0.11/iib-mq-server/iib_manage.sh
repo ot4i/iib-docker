@@ -1,4 +1,4 @@
-#!/bin/bash
+﻿#!/bin/bash
 # © Copyright IBM Corporation 2015.
 #
 # All rights reserved. This program and the accompanying materials
@@ -43,6 +43,7 @@ start_iib()
           sudo /usr/sbin/rsyslogd
           echo "Starting node $NODENAME"
           mqsistart $NODENAME
+          mqsichangeproperties $NODENAME -e $SERVERNAME -o ExecutionGroup -n httpNodesUseEmbeddedListener -v true
           echo "----------------------------------------" 
           echo "----------------------------------------"
           echo "Creating integration server $SERVERNAME"
