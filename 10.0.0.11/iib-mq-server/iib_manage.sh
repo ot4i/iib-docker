@@ -43,11 +43,11 @@ start_iib()
           sudo /usr/sbin/rsyslogd
           echo "Starting node $NODENAME"
           mqsistart $NODENAME
-          mqsichangeproperties $NODENAME -e $SERVERNAME -o ExecutionGroup -n httpNodesUseEmbeddedListener -v true
           echo "----------------------------------------" 
           echo "----------------------------------------"
           echo "Creating integration server $SERVERNAME"
           mqsicreateexecutiongroup $NODENAME -e $SERVERNAME -w 120
+          mqsichangeproperties $NODENAME -e $SERVERNAME -o ExecutionGroup -n httpNodesUseEmbeddedListener -v true
           echo "----------------------------------------"
           echo "----------------------------------------"
           shopt -s nullglob
