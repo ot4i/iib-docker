@@ -1,4 +1,4 @@
-#!/bin/bash
+﻿#!/bin/bash
 # © Copyright IBM Corporation 2015.
 #
 # All rights reserved. This program and the accompanying materials
@@ -47,6 +47,7 @@ start_iib()
           echo "----------------------------------------"
           echo "Creating integration server $SERVERNAME"
           mqsicreateexecutiongroup $NODENAME -e $SERVERNAME -w 120
+          mqsichangeproperties $NODENAME -e $SERVERNAME -o ExecutionGroup -n httpNodesUseEmbeddedListener -v true
           echo "----------------------------------------"
           echo "----------------------------------------"
           shopt -s nullglob
