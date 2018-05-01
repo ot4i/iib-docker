@@ -1,3 +1,5 @@
+## Please note that we have now released IBM App Connect Enterprise v11, which you can find at [ot4i/ace-docker](https://github.com/ot4i/ace-docker)
+
 # Overview
 
 This repository contains a Dockerfile and some scripts which demonstrate a way in which you might run [IBM Integration Bus](http://www-03.ibm.com/software/products/en/ibm-integration-bus) in a [Docker](https://www.docker.com/whatisdocker/) container.
