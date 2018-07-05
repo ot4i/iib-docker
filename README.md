@@ -43,13 +43,13 @@ docker build -t iib-mq-image .
 ~~~
 
 # What the image contains
+The built image contains a full runtime installation of [IBM Integration Bus for Developers Edition V10.0](https://ibm.biz/iibdevedn). If you wish to include the toolkit in your installation then you should build your own version of our Dockerfile but with the '--exclude iib-10.0.0.11/tools' part of the tar command removed.
 
-The built image contains a full installation of [IBM Integration Bus for Developers Edition V10.0](https://ibm.biz/iibdevedn). If you install the stand-alone image, which does not contain an installation of IBM MQ, some functionality may not be available, or may be changed - see this [topic](http://www-01.ibm.com/support/knowledgecenter/SSMKHH_10.0.0/com.ibm.etools.mft.doc/bb28660_.htm) for more information.
+If you install the stand-alone image, which does not contain an installation of IBM MQ, some functionality may not be available, or may be changed - see this [topic](http://www-01.ibm.com/support/knowledgecenter/SSMKHH_10.0.0/com.ibm.etools.mft.doc/bb28660_.htm) for more information.
 
 # Running a container
 
 After building a Docker image from the supplied files, you can [run a container](https://docs.docker.com/userguide/usingdocker/) which will create and start an Integration Node to which you can [deploy](http://www-01.ibm.com/support/knowledgecenter/SSMKHH_10.0.0/com.ibm.etools.mft.doc/af03890_.htm) integration solutions.
-
 
 ## Running with the default configuration
 In order to run a container from this image, it is necessary to accept the terms of the IBM Integration Bus for Developers license.  This is achieved by specifying the environment variable `LICENSE` equal to `accept` when running the image.  You can also view the license terms by setting this variable to `view`. Failure to set the variable will result in the termination of the container with a usage statement.  You can view the license in a different language by also setting the `LANG` environment variable.
