@@ -43,7 +43,7 @@ docker build -t iib-mq-image .
 ~~~
 
 # What the image contains
-The built image contains a full runtime installation of [IBM Integration Bus for Developers Edition V10.0](https://ibm.biz/iibdevedn). If you wish to include the toolkit in your installation then you should build your own version of our Dockerfile but with the '--exclude iib-10.0.0.11/tools' part of the tar command removed.
+The built image contains a full runtime installation of [IBM Integration Bus for Developers Edition V10.0](https://ibm.biz/iibdevedn). If you wish to include the toolkit in your installation then you should build your own version of our Dockerfile but with the `--exclude iib-10.0.0.11/tools` part of the tar command removed.
 
 If you install the stand-alone image, which does not contain an installation of IBM MQ, some functionality may not be available, or may be changed - see this [topic](http://www-01.ibm.com/support/knowledgecenter/SSMKHH_10.0.0/com.ibm.etools.mft.doc/bb28660_.htm) for more information.
 
