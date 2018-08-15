@@ -1,0 +1,38 @@
+* © Copyright IBM Corporation 2017
+*
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+
+* Turn qmgr chlauth back on
+ALTER QMGR CHLAUTH(ENABLED)
+
+* Set authorities
+SET AUTHREC OBJTYPE(QMGR) GROUP('mqclient') AUTHADD(CONNECT,INQ)
+SET AUTHREC PROFILE(QUEUE.IN) OBJTYPE(QUEUE) GROUP('mqclient') AUTHADD(PUT,GET,BROWSE,INQ)
+SET AUTHREC PROFILE(QUEUE.OUT) OBJTYPE(QUEUE) GROUP('mqclient') AUTHADD(PUT,GET,BROWSE,INQ)
+
+* Queues
+DEFINE QLOCAL('QUEUE.IN') REPLACE
+DEFINE QLOCAL('QUEUE.OUT') REPLACE
+
+* Connection authentication
+DEFINE AUTHINFO('AUTHINFO') AUTHTYPE(IDPWOS) CHCKCLNT(REQDADM) CHCKLOCL(OPTIONAL) ADOPTCTX(YES) REPLACE
+ALTER QMGR CONNAUTH('AUTHINFO')
+REFRESH SECURITY(*) TYPE(CONNAUTH)
+
+* Channels
+DEFINE CHANNEL('IIB.SVRCONN') CHLTYPE(SVRCONN) MCAUSER('iibmquser') REPLACE
+
+* Channel authentication rules
+SET CHLAUTH('*') TYPE(ADDRESSMAP) ADDRESS('*') USERSRC(NOACCESS) DESCR('Back-stop rule - Blocks everyone') ACTION(REPLACE)
+SET CHLAUTH('IIB.SVRCONN') TYPE(ADDRESSMAP) ADDRESS('*') USERSRC(CHANNEL) CHCKCLNT(REQUIRED) DESCR('Allows connection via IIB channel') ACTION(REPLACE)
