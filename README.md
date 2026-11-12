@@ -1,3 +1,5 @@
+**This repo is not in active use and is being archived.**
+
 ## Please note that we have now released IBM App Connect Enterprise v11, which you can find at [ot4i/ace-docker](https://github.com/ot4i/ace-docker)
 
 # Overview
